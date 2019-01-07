@@ -74,6 +74,9 @@
 		EB263C175F024F68B8B9881E /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58DC8864838B4D9CAEC73896 /* Ionicons.ttf */; };
 		F63C93E3B4B44F6FB0D6526A /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5BD3CF33D5149CCBC0D4C15 /* Zocial.ttf */; };
 		5BE4ACBAA9A94B09BCE0F020 /* libRNAWSCognito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EBE467C02684E4B930A5E0B /* libRNAWSCognito.a */; };
+		19D224EF3ECE433BAFDCEC5A /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 721AA6096B254C37A62E5CBD /* libRNGestureHandler.a */; };
+		945BE205326F4410B19E7568 /* profileicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 316AECFB1BE045D8821E856B /* profileicon.png */; };
+		4D2F31BC70A443EE932F4145 /* puppy.png in Resources */ = {isa = PBXBuildFile; fileRef = AA52C67A4E5E47DAA008028D /* puppy.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -383,6 +386,10 @@
 		F8BE33427F69444291DFE84D /* Lato-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Bold.ttf"; path = "../assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; };
 		606D48E7EF684407A9F07765 /* RNAWSCognito.xcodeproj */ = {isa = PBXFileReference; name = "RNAWSCognito.xcodeproj"; path = "../node_modules/amazon-cognito-identity-js/ios/RNAWSCognito.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		7EBE467C02684E4B930A5E0B /* libRNAWSCognito.a */ = {isa = PBXFileReference; name = "libRNAWSCognito.a"; path = "libRNAWSCognito.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		6C19237528D84F08B095C6EF /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; name = "RNGestureHandler.xcodeproj"; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		721AA6096B254C37A62E5CBD /* libRNGestureHandler.a */ = {isa = PBXFileReference; name = "libRNGestureHandler.a"; path = "libRNGestureHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		316AECFB1BE045D8821E856B /* profileicon.png */ = {isa = PBXFileReference; name = "profileicon.png"; path = "../assets/images/profileicon.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AA52C67A4E5E47DAA008028D /* puppy.png */ = {isa = PBXFileReference; name = "puppy.png"; path = "../assets/images/puppy.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,6 +420,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				A6B36CFCFE1B45E890F3E066 /* libRNFetchBlob.a in Frameworks */,
 				5BE4ACBAA9A94B09BCE0F020 /* libRNAWSCognito.a in Frameworks */,
+				19D224EF3ECE433BAFDCEC5A /* libRNGestureHandler.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +598,8 @@
 				31A6B6B9A6244FCB95E2DD13 /* Octicons.ttf */,
 				21229F3E7835427988C1E3B4 /* SimpleLineIcons.ttf */,
 				D5BD3CF33D5149CCBC0D4C15 /* Zocial.ttf */,
+				316AECFB1BE045D8821E856B /* profileicon.png */,
+				AA52C67A4E5E47DAA008028D /* puppy.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -653,6 +663,7 @@
 				CFC232AEFE084CC38063B361 /* RNVectorIcons.xcodeproj */,
 				1A02E9F618404F36A747E522 /* RNFetchBlob.xcodeproj */,
 				606D48E7EF684407A9F07765 /* RNAWSCognito.xcodeproj */,
+				6C19237528D84F08B095C6EF /* RNGestureHandler.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1144,6 +1155,8 @@
 				1EDDD290009544B88EB87855 /* Octicons.ttf in Resources */,
 				B06FE09527EF4120BC153DC7 /* SimpleLineIcons.ttf in Resources */,
 				F63C93E3B4B44F6FB0D6526A /* Zocial.ttf in Resources */,
+				945BE205326F4410B19E7568 /* profileicon.png in Resources */,
+				4D2F31BC70A443EE932F4145 /* puppy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1271,12 +1284,14 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 				);
 				INFOPLIST_FILE = awsmobilereactnativesampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1298,12 +1313,14 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 				);
 				INFOPLIST_FILE = awsmobilereactnativesampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1326,6 +1343,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 				);
 				INFOPLIST_FILE = awsmobilereactnativesample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1349,6 +1367,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 				);
 				INFOPLIST_FILE = awsmobilereactnativesample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1379,11 +1398,13 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 				);
 				INFOPLIST_FILE = "awsmobilereactnativesample-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1415,11 +1436,13 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 				);
 				INFOPLIST_FILE = "awsmobilereactnativesample-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1450,6 +1473,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.awsmobilereactnativesample-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1474,6 +1498,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.awsmobilereactnativesample-tvOSTests";

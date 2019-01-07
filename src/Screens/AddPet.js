@@ -10,47 +10,42 @@
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
  * and limitations under the License.
  */
-import React from 'react';
+import { API, Storage } from "aws-amplify";
+import mime from "mime-types";
+import React from "react";
 import {
-  View,
-  Text,
+  ActivityIndicator,
   CameraRoll,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Modal,
   Dimensions,
   Image,
-  ScrollView,
-  ImageStore,
+  Modal,
   Platform,
-  ActivityIndicator,
-} from 'react-native';
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View
+} from "react-native";
 import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage,
   Button,
-  Icon,
   ButtonGroup,
-} from 'react-native-elements';
-import RNFetchBlob from 'react-native-fetch-blob';
-import uuid from 'react-native-uuid';
-import mime from 'mime-types';
+  FormInput,
+  FormLabel,
+  Icon
+} from "react-native-elements";
+import uuid from "react-native-uuid";
+import DatePicker from "../Components/DatePicker";
+import files from "../Utils/files";
+import { colors } from "../Utils/theme";
 
-import { colors } from 'theme';
-import { API, Storage } from 'aws-amplify';
-import files from '../Utils/files';
-import awsmobile from '../aws-exports';
-import DatePicker from '../Components/DatePicker';
-
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 let styles = {};
 
 class AddPet extends React.Component {
   static navigationOptions = {
-    title: 'Add Pet',
-  }
+    title: "Add Pet"
+  };
 
   state = {
     selectedImage: {},
@@ -59,52 +54,54 @@ class AddPet extends React.Component {
     selectedGenderIndex: null,
     modalVisible: false,
     input: {
-      name: '',
+      name: "",
       dob: null,
-      breed: '',
-      gender: '',
+      breed: "",
+      gender: ""
     },
-    showActivityIndicator: false,
-  }
+    showActivityIndicator: false
+  };
 
   updateSelectedImage = (selectedImage, selectedImageIndex) => {
     if (selectedImageIndex === this.state.selectedImageIndex) {
       this.setState({
         selectedImageIndex: null,
         selectedImage: {}
-      })
+      });
     } else {
       this.setState({
         selectedImageIndex,
-        selectedImage,
+        selectedImage
       });
     }
-  }
+  };
 
   updateInput = (key, value) => {
-    this.setState((state) => ({
+    this.setState(state => ({
       input: {
         ...state.input,
-        [key]: value,
+        [key]: value
       }
-    }))
-  }
+    }));
+  };
 
   getPhotos = () => {
-    CameraRoll
-      .getPhotos({
-        first: 20,
-      })
+    CameraRoll.getPhotos({
+      first: 20
+    })
       .then(res => {
-        this.setState({ images: res.edges })
-        this.props.navigation.navigate('UploadPhoto', { data: this.state, updateSelectedImage: this.updateSelectedImage })
+        this.setState({ images: res.edges });
+        this.props.navigation.navigate("UploadPhoto", {
+          data: this.state,
+          updateSelectedImage: this.updateSelectedImage
+        });
       })
-      .catch(err => console.log('error getting photos...:', err))
-  }
+      .catch(err => console.log("error getting photos...:", err));
+  };
 
   toggleModal = () => {
-    this.setState(() => ({ modalVisible: !this.state.modalVisible }))
-  }
+    this.setState(() => ({ modalVisible: !this.state.modalVisible }));
+  };
 
   readImage(imageNode = null) {
     if (imageNode === null) {
@@ -114,7 +111,7 @@ class AddPet extends React.Component {
     const { image } = imageNode;
     const result = {};
 
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       result.type = mime.lookup(image.filename);
     } else {
       result.type = imageNode.type;
@@ -125,10 +122,13 @@ class AddPet extends React.Component {
     const picName = `${uuid.v1()}.${extension}`;
     const key = `${picName}`;
 
-    return files.readFile(imagePath)
-      .then(buffer => Storage.put(key, buffer, { level: 'private', contentType: result.type }))
+    return files
+      .readFile(imagePath)
+      .then(buffer =>
+        Storage.put(key, buffer, { level: "private", contentType: result.type })
+      )
       .then(fileInfo => ({ key: fileInfo.key }))
-      .then(x => console.log('SAVED', x) || x);
+      .then(x => console.log("SAVED", x) || x);
   }
 
   AddPet = async () => {
@@ -140,7 +140,7 @@ class AddPet extends React.Component {
     this.readImage(imageNode)
       .then(fileInfo => ({
         ...petInfo,
-        picKey: fileInfo && fileInfo.key,
+        picKey: fileInfo && fileInfo.key
       }))
       .then(this.apiSavePet)
       .then(data => {
@@ -149,58 +149,55 @@ class AddPet extends React.Component {
         this.props.screenProps.toggleModal();
       })
       .catch(err => {
-        console.log('error saving pet...', err);
+        console.log("error saving pet...", err);
         this.setState({ showActivityIndicator: false });
       });
-  }
+  };
 
   async apiSavePet(pet) {
-    return await API.post('Pets', '/items/pets', { body: pet });
+    return await API.post("Pets", "/items/pets", { body: pet });
   }
 
-  updateGender = (index) => {
-    let gender = 'female';
+  updateGender = index => {
+    let gender = "female";
     if (index === this.state.selectedGenderIndex) {
       index = null;
-      gender = '';
+      gender = "";
+    } else if (index === 1) {
+      gender = "male";
     }
-    else if (index === 1) {
-      gender = 'male';
-    }
-    this.setState((state) => ({
+    this.setState(state => ({
       selectedGenderIndex: index,
       input: {
         ...state.input,
-        gender,
+        gender
       }
-    }))
-  }
-
+    }));
+  };
 
   render() {
-    const { selectedImageIndex, selectedImage, selectedGenderIndex } = this.state;
+    const {
+      selectedImageIndex,
+      selectedImage,
+      selectedGenderIndex
+    } = this.state;
 
     return (
       <View style={{ flex: 1, paddingBottom: 0 }}>
         <ScrollView style={{ flex: 1 }}>
           <Text style={styles.title}>Add New Pet</Text>
-          <TouchableWithoutFeedback
-            onPress={this.getPhotos}
-          >
-            {
-              selectedImageIndex === null ? (
-                <View style={styles.addImageContainer}>
-                  <Icon size={34} name='camera-roll' color={colors.grayIcon} />
-                  <Text style={styles.addImageTitle}>Upload Photo</Text>
-                </View>
-              ) : (
-                  <Image
-                    style={styles.addImageContainer}
-                    source={{ uri: selectedImage.node.image.uri }}
-                  />
-                )
-            }
-
+          <TouchableWithoutFeedback onPress={this.getPhotos}>
+            {selectedImageIndex === null ? (
+              <View style={styles.addImageContainer}>
+                <Icon size={34} name="camera-roll" color={colors.grayIcon} />
+                <Text style={styles.addImageTitle}>Upload Photo</Text>
+              </View>
+            ) : (
+              <Image
+                style={styles.addImageContainer}
+                source={{ uri: selectedImage.node.image.uri }}
+              />
+            )}
           </TouchableWithoutFeedback>
           <FormLabel>Name</FormLabel>
           <FormInput
@@ -214,7 +211,7 @@ class AddPet extends React.Component {
             returnKeyType="next"
             ref="name"
             textInputRef="nameInput"
-            onChangeText={(name) => this.updateInput('name', name)}
+            onChangeText={name => this.updateInput("name", name)}
             value={this.state.input.name}
           />
           <FormLabel>Date Of Birth</FormLabel>
@@ -223,8 +220,8 @@ class AddPet extends React.Component {
             selectionColor={colors.primary}
             value={this.state.input.dob}
             ref="datepicker"
-            onDateChange={date => this.updateInput('dob', date)}>
-          </DatePicker>
+            onDateChange={date => this.updateInput("dob", date)}
+          />
           <FormLabel>Breed</FormLabel>
           <FormInput
             inputStyle={styles.input}
@@ -237,24 +234,24 @@ class AddPet extends React.Component {
             returnKeyType="next"
             ref="breed"
             textInputRef="breedInput"
-            onChangeText={(breed) => this.updateInput('breed', breed)}
+            onChangeText={breed => this.updateInput("breed", breed)}
             value={this.state.input.breed}
           />
           <FormLabel>Gender</FormLabel>
           <View style={styles.buttonGroupContainer}>
             <ButtonGroup
               innerBorderStyle={{ width: 0.5 }}
-              underlayColor='#0c95de'
-              containerStyle={{ borderColor: '#d0d0d0' }}
-              selectedTextStyle={{ color: 'white', fontFamily: 'lato' }}
+              underlayColor="#0c95de"
+              containerStyle={{ borderColor: "#d0d0d0" }}
+              selectedTextStyle={{ color: "white", fontFamily: "lato" }}
               selectedBackgroundColor={colors.primary}
               onPress={this.updateGender}
               selectedIndex={this.state.selectedGenderIndex}
-              buttons={['female', 'male']}
+              buttons={["female", "male"]}
             />
           </View>
           <Button
-            fontFamily='lato'
+            fontFamily="lato"
             containerViewStyle={{ marginTop: 20 }}
             backgroundColor={colors.primary}
             large
@@ -263,16 +260,16 @@ class AddPet extends React.Component {
           />
           <Text
             onPress={this.props.screenProps.toggleModal}
-            style={styles.closeModal}>Dismiss</Text>
+            style={styles.closeModal}
+          >
+            Dismiss
+          </Text>
         </ScrollView>
         <Modal
           visible={this.state.showActivityIndicator}
           onRequestClose={() => null}
         >
-          <ActivityIndicator
-            style={styles.activityIndicator}
-            size="large"
-          />
+          <ActivityIndicator style={styles.activityIndicator} size="large" />
         </Modal>
       </View>
     );
@@ -281,7 +278,7 @@ class AddPet extends React.Component {
 
 styles = StyleSheet.create({
   buttonGroupContainer: {
-    marginHorizontal: 8,
+    marginHorizontal: 8
   },
   addImageContainer: {
     width: 120,
@@ -291,36 +288,36 @@ styles = StyleSheet.create({
     borderWidth: 1.5,
     marginVertical: 14,
     borderRadius: 60,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center"
   },
   addImageTitle: {
     color: colors.darkGray,
-    marginTop: 3,
+    marginTop: 3
   },
   closeModal: {
     color: colors.darkGray,
     marginTop: 10,
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: "center"
   },
   title: {
     marginLeft: 20,
     marginTop: 19,
     color: colors.darkGray,
     fontSize: 18,
-    marginBottom: 15,
+    marginBottom: 15
   },
   input: {
-    fontFamily: 'lato',
+    fontFamily: "lato"
   },
   activityIndicator: {
     backgroundColor: colors.mask,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
+  }
 });
 
 export default AddPet;

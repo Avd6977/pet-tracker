@@ -10,66 +10,65 @@
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
  * and limitations under the License.
  */
-import React from 'react';
+import React from "react";
 import {
-  View,
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  Modal,
   StyleSheet,
   Text,
-  Image,
-  ActivityIndicator,
-  Modal,
-  Dimensions,
-} from 'react-native';
+  View
+} from "react-native";
 import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage,
   Button,
-} from 'react-native-elements';
-import { StackNavigator } from 'react-navigation';
+  FormInput,
+  FormLabel,
+  FormValidationMessage
+} from "react-native-elements";
+import { createStackNavigator } from "react-navigation";
+import MFAPrompt from "../../lib/Categories/Auth/Components/MFAPrompt";
+import Constants from "../Utils/constants";
+import { colors } from "../Utils/theme";
+import ForgotPassword from "./ForgotPassword";
 
-import MFAPrompt from '../../lib/Categories/Auth/Components/MFAPrompt';
-import ForgotPassword from './ForgotPassword';
-import { colors } from 'theme';
-import Constants from '../Utils/constants';
-
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   bla: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'white',
+    justifyContent: "center",
+    backgroundColor: "white"
   },
   activityIndicator: {
     backgroundColor: colors.mask,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
   },
   formContainer: {
     height: 250,
-    justifyContent: 'space-around',
-    paddingHorizontal: 5,
+    justifyContent: "space-around",
+    paddingHorizontal: 5
   },
   input: {
-    fontFamily: 'lato',
+    fontFamily: "lato"
   },
   validationText: {
-    fontFamily: 'lato',
+    fontFamily: "lato"
   },
   puppy: {
     width: width / 2,
-    height: width / 2,
+    height: width / 2
   },
   imageContainer: {
-    alignItems: 'center',
+    alignItems: "center"
   },
   passwordResetButton: {
     color: colors.primary,
     marginTop: 10,
-    textAlign: 'center',
-  },
+    textAlign: "center"
+  }
 });
 
 class LogIn extends React.Component {
@@ -78,11 +77,11 @@ class LogIn extends React.Component {
 
     this.state = {
       showActivityIndicator: false,
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       showMFAPrompt: false,
-      errorMessage: '',
-      cognitoUser: '',
+      errorMessage: "",
+      cognitoUser: ""
     };
 
     this.baseState = this.state;
@@ -104,33 +103,36 @@ class LogIn extends React.Component {
   async doLogin() {
     const { auth } = this.props;
     const { username, password } = this.state;
-    let errorMessage = '';
+    let errorMessage = "";
     let showMFAPrompt = false;
     let session = null;
 
     try {
-      session = await auth.signIn(username, password)
-        .then((data) => {
-          console.log('We get the Cognito User', data),
-            this.setState({ cognitoUser: data }),
-            showMFAPrompt = true;
-          console.log('login mfaRequired');
-        });
+      session = await auth.signIn(username, password).then(data => {
+        console.log("We get the Cognito User", data),
+          this.setState({ cognitoUser: data }),
+          (showMFAPrompt = true);
+        console.log("login mfaRequired");
+      });
     } catch (exception) {
       console.log(exception);
-      errorMessage = exception.invalidCredentialsMessage || exception.message || exception;
+      errorMessage =
+        exception.invalidCredentialsMessage || exception.message || exception;
     }
 
-    this.setState({
-      showMFAPrompt,
-      errorMessage,
-      session,
-      showActivityIndicator: false,
-    }, () => {
-      if (session) {
-        this.onLogIn();
+    this.setState(
+      {
+        showMFAPrompt,
+        errorMessage,
+        session,
+        showActivityIndicator: false
+      },
+      () => {
+        if (session) {
+          this.onLogIn();
+        }
       }
-    });
+    );
   }
 
   handleLogInClick() {
@@ -139,16 +141,15 @@ class LogIn extends React.Component {
     setTimeout(this.doLogin, 0);
   }
 
-  async handleMFAValidate(code = '') {
+  async handleMFAValidate(code = "") {
     const { auth } = this.props;
 
     try {
       let session = null;
-      await auth.confirmSignIn(this.state.cognitoUser, code)
-        .then(async () => {
-          session = await auth.currentSession();
-          this.setState({ session });
-        });
+      await auth.confirmSignIn(this.state.cognitoUser, code).then(async () => {
+        session = await auth.currentSession();
+        this.setState({ session });
+      });
     } catch (exception) {
       return exception.message;
     }
@@ -161,40 +162,43 @@ class LogIn extends React.Component {
   }
 
   handleMFASuccess() {
-    this.setState({
-      showMFAPrompt: false,
-    }, () => {
-      this.onLogIn();
-    });
+    this.setState(
+      {
+        showMFAPrompt: false
+      },
+      () => {
+        this.onLogIn();
+      }
+    );
   }
 
   render() {
     return (
       <View style={styles.bla}>
-        {this.state.showMFAPrompt &&
+        {this.state.showMFAPrompt && (
           <MFAPrompt
             onValidate={this.handleMFAValidate}
             onCancel={this.handleMFACancel}
             onSuccess={this.handleMFASuccess}
-          />}
+          />
+        )}
         <Modal
           visible={this.state.showActivityIndicator}
           onRequestClose={() => null}
         >
-          <ActivityIndicator
-            style={styles.activityIndicator}
-            size="large"
-          />
+          <ActivityIndicator style={styles.activityIndicator} size="large" />
         </Modal>
         <View style={styles.imageContainer}>
           <Image
-            resizeMode='contain'
-            source={require('../../assets/images/puppy.png')}
+            resizeMode="contain"
+            source={require("../../assets/images/puppy.png")}
             style={styles.puppy}
           />
         </View>
         <View style={styles.formContainer}>
-          <FormValidationMessage labelStyle={styles.validationText}>{this.state.errorMessage}</FormValidationMessage>
+          <FormValidationMessage labelStyle={styles.validationText}>
+            {this.state.errorMessage}
+          </FormValidationMessage>
           <FormLabel>Username</FormLabel>
           <FormInput
             inputStyle={styles.input}
@@ -207,9 +211,12 @@ class LogIn extends React.Component {
             returnKeyType="next"
             ref="username"
             textInputRef="usernameInput"
-            onSubmitEditing={() => { this.refs.password.refs.passwordInput.focus() }}
-            onChangeText={(username) => this.setState({ username })}
-            value={this.state.username} />
+            onSubmitEditing={() => {
+              this.refs.password.refs.passwordInput.focus();
+            }}
+            onChangeText={username => this.setState({ username })}
+            value={this.state.username}
+          />
           <FormLabel>Password</FormLabel>
           <FormInput
             inputStyle={styles.input}
@@ -221,47 +228,60 @@ class LogIn extends React.Component {
             returnKeyType="next"
             ref="password"
             textInputRef="passwordInput"
-            onChangeText={(password) => this.setState({ password })}
-            value={this.state.password} />
+            onChangeText={password => this.setState({ password })}
+            value={this.state.password}
+          />
           <Button
-            fontFamily='lato'
+            fontFamily="lato"
             containerViewStyle={{ marginTop: 20 }}
             backgroundColor={colors.primary}
             large
             title="SIGN IN"
-            onPress={this.handleLogInClick} />
+            onPress={this.handleLogInClick}
+          />
           <Text
-            onPress={() => this.props.navigation.navigate('ForgotPassword')}
+            onPress={() => this.props.navigation.navigate("ForgotPassword")}
             style={styles.passwordResetButton}
-          >Forgot your password?</Text>
+          >
+            Forgot your password?
+          </Text>
         </View>
       </View>
     );
   }
-
 }
 
-const LogInStack = (StackNavigator({
-  LogIn: {
-    screen: (props) => {
-      const { screenProps, ...otherProps } = props;
+const LogInStack = createStackNavigator(
+  {
+    LogIn: {
+      screen: props => {
+        const { screenProps, ...otherProps } = props;
 
-      return <LogIn {...screenProps} {...otherProps} />;
+        return <LogIn {...screenProps} {...otherProps} />;
+      },
+      navigationOptions: {
+        title: Constants.APP_NAME
+      }
     },
-    navigationOptions: {
-      title: Constants.APP_NAME,
-    },
-  },
-  ForgotPassword: {
-    screen: (props) => {
-      const { screenProps, ...otherProps } = props;
+    ForgotPassword: {
+      screen: props => {
+        const { screenProps, ...otherProps } = props;
 
-      return <ForgotPassword {...screenProps} {...otherProps} onCancel={() => otherProps.navigation.goBack()} onSuccess={() => otherProps.navigation.goBack()} />;
-    },
-    navigationOptions: {
-      title: Constants.APP_NAME,
-    },
+        return (
+          <ForgotPassword
+            {...screenProps}
+            {...otherProps}
+            onCancel={() => otherProps.navigation.goBack()}
+            onSuccess={() => otherProps.navigation.goBack()}
+          />
+        );
+      },
+      navigationOptions: {
+        title: Constants.APP_NAME
+      }
+    }
   },
-}, { mode: 'modal' }));
+  { mode: "modal" }
+);
 
 export default props => <LogInStack screenProps={{ ...props }} />;

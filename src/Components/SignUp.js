@@ -10,54 +10,46 @@
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
  * and limitations under the License.
  */
-import React from 'react';
+import { Auth } from "aws-amplify";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  Image,
-} from 'react-native';
-import {
-  Icon,
-  FormLabel,
-  FormInput,
-  FormValidationMessage,
   Button,
-} from 'react-native-elements';
-import { StackNavigator } from 'react-navigation';
-
-import MFAPrompt from '../../lib/Categories/Auth/Components/MFAPrompt';
-import { Auth } from 'aws-amplify';
-import Constants from '../Utils/constants';
-import { colors } from 'theme';
+  FormInput,
+  FormLabel,
+  FormValidationMessage
+} from "react-native-elements";
+import { createStackNavigator } from "react-navigation";
+import MFAPrompt from "../../lib/Categories/Auth/Components/MFAPrompt";
+import Constants from "../Utils/constants";
+import { colors } from "../Utils/theme";
 
 const styles = StyleSheet.create({
   bla: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'white',
+    justifyContent: "center",
+    backgroundColor: "white"
   },
   formContainer: {
-    justifyContent: 'space-around',
-    height: 420,
-  },
+    justifyContent: "space-around",
+    height: 420
+  }
 });
 
 class SignUp extends React.Component {
   static navigationOptions = {
-    title: Constants.APP_NAME,
-  }
+    title: Constants.APP_NAME
+  };
   constructor(props) {
     super(props);
 
     this.state = {
       showMFAPrompt: false,
-      username: '',
-      password: '',
-      email: '',
-      phoneNumber: '',
-      errorMessage: '',
+      username: "",
+      password: "",
+      email: "",
+      phoneNumber: "",
+      errorMessage: ""
     };
 
     this.baseState = this.state;
@@ -90,10 +82,11 @@ class SignUp extends React.Component {
       });
   }
 
-  async handleMFAValidate(code = '') {
+  async handleMFAValidate(code = "") {
     try {
-      await Auth.confirmSignUp(this.state.username, code)
-        .then(data => console.log('sign up successful ->', data));
+      await Auth.confirmSignUp(this.state.username, code).then(data =>
+        console.log("sign up successful ->", data)
+      );
     } catch (exception) {
       return exception.message || exception;
     }
@@ -102,7 +95,7 @@ class SignUp extends React.Component {
   }
 
   handleMFACancel() {
-    this.setState({ showMFAPrompt: false })
+    this.setState({ showMFAPrompt: false });
   }
 
   handleMFASuccess() {
@@ -117,14 +110,18 @@ class SignUp extends React.Component {
     this.props.onSignUp();
   }
 
-  checkPhonePattern = (phone) => {
+  checkPhonePattern = phone => {
     return /\+[1-9]\d{1,14}$/.test(phone);
-  }
+  };
 
   onPhoneSubmit(event) {
     const isValidPhone = this.checkPhonePattern(event.nativeEvent.text);
 
-    this.setState({ errorMessage: !isValidPhone && 'Please enter a phone number with the format +(countrycode)(number) such as +12223334444' });
+    this.setState({
+      errorMessage:
+        !isValidPhone &&
+        "Please enter a phone number with the format +(countrycode)(number) such as +12223334444"
+    });
   }
 
   render() {
@@ -132,7 +129,9 @@ class SignUp extends React.Component {
       <View style={styles.bla}>
         <View style={styles.formContainer}>
           <View>
-            <FormValidationMessage>{this.state.errorMessage}</FormValidationMessage>
+            <FormValidationMessage>
+              {this.state.errorMessage}
+            </FormValidationMessage>
             <FormLabel>Username</FormLabel>
             <FormInput
               editable
@@ -143,10 +142,15 @@ class SignUp extends React.Component {
               returnKeyType="next"
               ref="username"
               textInputRef="usernameInput"
-              onSubmitEditing={() => { this.refs.password.refs.passwordInput.focus() }}
+              onSubmitEditing={() => {
+                this.refs.password.refs.passwordInput.focus();
+              }}
               value={this.state.username}
-              onChangeText={username => this.setState({ username })} />
-            {false && <FormValidationMessage>Error message</FormValidationMessage>}
+              onChangeText={username => this.setState({ username })}
+            />
+            {false && (
+              <FormValidationMessage>Error message</FormValidationMessage>
+            )}
           </View>
           <View>
             <FormLabel>Password</FormLabel>
@@ -158,11 +162,16 @@ class SignUp extends React.Component {
               returnKeyType="next"
               ref="password"
               textInputRef="passwordInput"
-              onSubmitEditing={() => { this.refs.email.refs.emailInput.focus() }}
+              onSubmitEditing={() => {
+                this.refs.email.refs.emailInput.focus();
+              }}
               secureTextEntry
               value={this.state.password}
-              onChangeText={password => this.setState({ password })} />
-            {false && <FormValidationMessage>Error message</FormValidationMessage>}
+              onChangeText={password => this.setState({ password })}
+            />
+            {false && (
+              <FormValidationMessage>Error message</FormValidationMessage>
+            )}
           </View>
           <View>
             <FormLabel>Email</FormLabel>
@@ -175,10 +184,15 @@ class SignUp extends React.Component {
               returnKeyType="next"
               ref="email"
               textInputRef="emailInput"
-              onSubmitEditing={() => { this.refs.phone.refs.phoneInput.focus() }}
+              onSubmitEditing={() => {
+                this.refs.phone.refs.phoneInput.focus();
+              }}
               value={this.state.email}
-              onChangeText={email => this.setState({ email })} />
-            {false && <FormValidationMessage>Error message</FormValidationMessage>}
+              onChangeText={email => this.setState({ email })}
+            />
+            {false && (
+              <FormValidationMessage>Error message</FormValidationMessage>
+            )}
           </View>
           <View>
             <FormLabel>Phone Number</FormLabel>
@@ -194,35 +208,44 @@ class SignUp extends React.Component {
               value={this.state.phoneNumber}
               onBlur={this.onPhoneSubmit}
               onSubmitEditing={this.onPhoneSubmit}
-              onChangeText={phoneNumber => this.setState({ phoneNumber })} />
-            {false && <FormValidationMessage>Error message</FormValidationMessage>}
+              onChangeText={phoneNumber => this.setState({ phoneNumber })}
+            />
+            {false && (
+              <FormValidationMessage>Error message</FormValidationMessage>
+            )}
           </View>
           <Button
             raised
             large
             title="Sign Up"
             backgroundColor={colors.primary}
-            icon={{ name: 'lock', size: 18, type: 'font-awesome' }}
-            onPress={this.handleSignUp} />
-          {this.state.showMFAPrompt &&
+            icon={{ name: "lock", size: 18, type: "font-awesome" }}
+            onPress={this.handleSignUp}
+          />
+          {this.state.showMFAPrompt && (
             <MFAPrompt
               onValidate={this.handleMFAValidate}
               onCancel={this.handleMFACancel}
               onSuccess={this.handleMFASuccess}
-            />}
+            />
+          )}
         </View>
       </View>
     );
   }
 }
 
-const SignUpStack = StackNavigator({
+const SignUpStack = createStackNavigator({
   SignUp: {
-    screen: props => <SignUp {...props} onSignUp={props.screenProps.onSignUp} />,
+    screen: props => (
+      <SignUp {...props} onSignUp={props.screenProps.onSignUp} />
+    ),
     navigationOptions: {
-      title: Constants.APP_NAME,
+      title: Constants.APP_NAME
     }
-  },
+  }
 });
 
-export default props => <SignUpStack screenProps={{ onSignUp: props.onSignUp }} />;
+export default props => (
+  <SignUpStack screenProps={{ onSignUp: props.onSignUp }} />
+);
