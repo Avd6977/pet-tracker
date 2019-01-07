@@ -14,7 +14,7 @@ global.Buffer = global.Buffer || require("buffer").Buffer; // Required for aws s
 
 import Amplify from "aws-amplify";
 import React from "react";
-import { createDrawerNavigator } from "react-navigation";
+import { createAppContainer, createDrawerNavigator } from "react-navigation";
 import { WithAuth } from "./lib/Categories/Auth/Components";
 import awsmobile from "./src/aws-exports";
 import ForgotPassword from "./src/Components/ForgotPassword";
@@ -73,6 +73,7 @@ const App = createDrawerNavigator(
   { initialRouteName: "Splash" }
 );
 
-const AppContainer = props => <App screenProps={{ ...props }} />;
+const AppNavigator = props => <App screenProps={{ ...props }} />;
+const AppContainer = createAppContainer(AppNavigator);
 
 export default WithAuth(AppContainer);
