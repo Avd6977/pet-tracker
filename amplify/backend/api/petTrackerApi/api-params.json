@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/items",
+            "lambdaFunction": "pettrackerdbavd",
+            "privacy": {
+                "private": true,
+                "auth": "rw"
+            }
+        }
+    ],
+    "resourceName": "petTrackerApi",
+    "apiName": "pettracker4604f078",
+    "functionArns": [
+        {
+            "lambdaFunction": "pettrackerdbavd"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "pettracker-20190121120440-authRole",
+        "unAuthRoleName": "pettracker-20190121120440-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "pettrackerdbavd",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

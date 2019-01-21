@@ -171,6 +171,7 @@
     <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-base-1.10.0" level="project" />
     <orderEntry type="module" module-name="amazon-cognito-identity-js" />
     <orderEntry type="module" module-name="react-native-fetch-blob" />
+    <orderEntry type="module" module-name="react-native-gesture-handler" />
     <orderEntry type="module" module-name="react-native-vector-icons" />
   </component>
 </module>

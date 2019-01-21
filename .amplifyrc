@@ -1,0 +1,14 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "pettracker-20190121120440-authRole",
+            "UnauthRoleArn": "arn:aws:iam::512826829863:role/pettracker-20190121120440-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::512826829863:role/pettracker-20190121120440-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "pettracker-20190121120440-deployment",
+            "UnauthRoleName": "pettracker-20190121120440-unauthRole",
+            "StackName": "pettracker-20190121120440",
+            "StackId": "arn:aws:cloudformation:us-east-1:512826829863:stack/pettracker-20190121120440/05fe3300-1da7-11e9-a2ae-0af1b2bb447e"
+        }
+    }
+}

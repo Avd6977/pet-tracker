@@ -1,0 +1,101 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "pettracker-20190121120440-authRole",
+			"UnauthRoleArn": "arn:aws:iam::512826829863:role/pettracker-20190121120440-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::512826829863:role/pettracker-20190121120440-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "pettracker-20190121120440-deployment",
+			"UnauthRoleName": "pettracker-20190121120440-unauthRole",
+			"StackName": "pettracker-20190121120440",
+			"StackId": "arn:aws:cloudformation:us-east-1:512826829863:stack/pettracker-20190121120440/05fe3300-1da7-11e9-a2ae-0af1b2bb447e"
+		}
+	},
+	"auth": {
+		"cognitof387869c": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/pettracker-20190121120440-deployment/amplify-cfn-templates/auth/cognitof387869c-cloudformation-template.yml",
+				"logicalId": "authcognitof387869c"
+			},
+			"lastPushTimeStamp": "2019-01-21T18:24:07.024Z",
+			"output": {
+				"AppClientSecret": "lsm46skcksqif0h841usv3e2cceq5lqntj9pqs9v6h20cchsd6o",
+				"UserPoolId": "us-east-1_qkEKRhCgV",
+				"AppClientIDWeb": "11vcbml0dvruoeetju4tvshk06",
+				"AppClientID": "5u30095pljlbk4od27fa9j9d0p",
+				"IdentityPoolId": "us-east-1:f6f1e8fd-7932-42c2-9f6b-0f00851a6a89",
+				"IdentityPoolName": "cognitof387869c_identitypool_f387869c",
+				"UserPoolName": "cognitof387869c_userpool_f387869c"
+			},
+			"lastPushDirHash": "Fyuu+BJADtwtXFRPOTWSQmvMckY="
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/pettracker-20190121120440-deployment/amplify-cfn-templates/hosting/template.json",
+				"logicalId": "hostingS3AndCloudFront"
+			},
+			"lastPushTimeStamp": "2019-01-21T18:24:07.026Z",
+			"output": {
+				"S3BucketSecureURL": "https://pettracker-avd.s3.amazonaws.com",
+				"WebsiteURL": "http://pettracker-avd.s3-website-us-east-1.amazonaws.com",
+				"Region": "us-east-1",
+				"HostingBucketName": "pettracker-avd"
+			},
+			"lastPushDirHash": "Rs7fSjQgNlNbKx3+yDYlwCh4XeM="
+		}
+	},
+	"function": {
+		"pettrackerdbavd": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [],
+			"lastBuildTimeStamp": "2019-01-21T18:22:25.879Z",
+			"lastPackageTimeStamp": "2019-01-21T18:22:29.910Z",
+			"distZipFilename": "pettrackerdbavd-1548094945-latest-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/pettracker-20190121120440-deployment/amplify-cfn-templates/function/pettrackerdbavd-cloudformation-template.json",
+				"logicalId": "functionpettrackerdbavd"
+			},
+			"lastPushTimeStamp": "2019-01-21T18:24:07.035Z",
+			"output": {
+				"Region": "us-east-1",
+				"Arn": "arn:aws:lambda:us-east-1:512826829863:function:pettrackerdbavd",
+				"Name": "pettrackerdbavd"
+			},
+			"lastPushDirHash": "v/ioWOITSnQ/jQNWeaNllsLFcqk="
+		}
+	},
+	"api": {
+		"petTrackerApi": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "pettrackerdbavd",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/pettracker-20190121120440-deployment/amplify-cfn-templates/api/petTrackerApi-cloudformation-template.json",
+				"logicalId": "apipetTrackerApi"
+			},
+			"lastPushTimeStamp": "2019-01-21T18:24:07.035Z",
+			"output": {
+				"ApiName": "petTrackerApi",
+				"RootUrl": "https://65eviqvdsa.execute-api.us-east-1.amazonaws.com/Prod"
+			},
+			"lastPushDirHash": "Lwy2Bz1YE7anZIxPgbSgfh8PXWs="
+		}
+	}
+}
