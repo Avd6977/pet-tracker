@@ -26,7 +26,7 @@ const { width, height } = Dimensions.get("window");
 let styles = {};
 
 class UploadPhoto extends React.Component {
-  static navigationOptions = {
+  static defaultNavigationOptions = {
     title: "Upload Photo"
   };
   state = {

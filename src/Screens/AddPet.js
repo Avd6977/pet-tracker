@@ -13,26 +13,8 @@
 import { API, Storage } from "aws-amplify";
 import mime from "mime-types";
 import React from "react";
-import {
-  ActivityIndicator,
-  CameraRoll,
-  Dimensions,
-  Image,
-  Modal,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View
-} from "react-native";
-import {
-  Button,
-  ButtonGroup,
-  FormInput,
-  FormLabel,
-  Icon
-} from "react-native-elements";
+import { ActivityIndicator, CameraRoll, Dimensions, Image, Modal, Platform, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Button, ButtonGroup, FormInput, FormLabel, Icon } from "react-native-elements";
 import uuid from "react-native-uuid";
 import DatePicker from "../Components/DatePicker";
 import files from "../Utils/files";
@@ -43,7 +25,7 @@ const { width, height } = Dimensions.get("window");
 let styles = {};
 
 class AddPet extends React.Component {
-  static navigationOptions = {
+  static defaultNavigationOptions = {
     title: "Add Pet"
   };
 

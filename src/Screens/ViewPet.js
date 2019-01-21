@@ -15,7 +15,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { colors } from "../Utils/theme";
 
 class ViewPet extends React.PureComponent {
-  static navigationOptions = ({ navigation, screenProps }) =>
+  static defaultNavigationOptions = ({ navigation, screenProps }) =>
     console.log(screenProps) || {
       title: `Viewing ${navigation.state.params.pet.name}`
     };

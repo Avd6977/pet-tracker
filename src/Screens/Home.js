@@ -24,7 +24,7 @@ import {
   View
 } from "react-native";
 import { Icon } from "react-native-elements";
-import { createStackNavigator } from "react-navigation";
+import { StackNavigator } from "react-navigation";
 import SideMenuIcon from "../Components/SideMenuIcon";
 import UploadPhoto from "../Components/UploadPhoto";
 import { colors } from "../Utils/theme";
@@ -136,7 +136,7 @@ class Home extends React.Component {
       outputRange: ["0deg", "360deg"]
     });
 
-    const AddPetRoutes = createStackNavigator({
+    const AddPetRoutes = StackNavigator({
       AddPet: { screen: AddPet },
       UploadPhoto: { screen: UploadPhoto }
     });
@@ -230,7 +230,7 @@ const HomeRouteStack = {
       const { screenProps, ...otherProps } = props;
       return <Home {...props.screenProps} {...otherProps} />;
     },
-    navigationOptions: props => {
+    defaultNavigationOptions: props => {
       return {
         title: "Home",
         headerLeft: (
@@ -246,7 +246,7 @@ const HomeRouteStack = {
   ViewPet: { screen: ViewPet }
 };
 
-const HomeNav = createStackNavigator(HomeRouteStack);
+const HomeNav = StackNavigator(HomeRouteStack);
 
 export default props => {
   const { screenProps, rootNavigator, ...otherProps } = props;

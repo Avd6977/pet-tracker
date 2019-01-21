@@ -27,7 +27,7 @@
     "react-native-prompt": "1.0.0",
     "react-native-uuid": "1.4.9",
     "react-native-vector-icons": "6.1.0",
-    "react-navigation": "3.0.9",
+    "react-navigation": "2.3.0",
     "rn-prompt": "1.0.3"
   },
   "rnpm": {

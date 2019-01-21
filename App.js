@@ -13,10 +13,10 @@
 global.Buffer = global.Buffer || require("buffer").Buffer; // Required for aws sigv4 signing
 
 import Amplify from "aws-amplify";
+// import { withAuthenticator } from "aws-amplify-react-native";
 import React from "react";
-import { createAppContainer, createDrawerNavigator } from "react-navigation";
-import { WithAuth } from "./lib/Categories/Auth/Components";
-import awsmobile from "./src/aws-exports";
+import { DrawerNavigator } from "react-navigation";
+import awsmobile from "./aws-exports";
 import ForgotPassword from "./src/Components/ForgotPassword";
 import SignOut from "./src/Components/SignOut";
 import First from "./src/Screens/First";
@@ -25,7 +25,7 @@ import Splash from "./src/Screens/Splash";
 
 Amplify.configure(awsmobile);
 
-const App = createDrawerNavigator(
+const App = DrawerNavigator(
   {
     Home: {
       screen: props => (
@@ -73,7 +73,9 @@ const App = createDrawerNavigator(
   { initialRouteName: "Splash" }
 );
 
-const AppNavigator = props => <App screenProps={{ ...props }} />;
-const AppContainer = createAppContainer(AppNavigator);
+const AppContainer = props => <App screenProps={{ ...props }} />;
+// const AppContainer = createAppContainer(AppNavigator);
 
-export default WithAuth(AppContainer);
+export default AppContainer;
+
+// export default withAuthenticator(AppContainer);

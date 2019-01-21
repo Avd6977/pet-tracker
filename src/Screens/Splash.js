@@ -10,31 +10,29 @@
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
  * and limitations under the License.
  */
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { NavigationActions } from 'react-navigation';
-
-import Constants from '../Utils/constants';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Constants from "../Utils/constants";
 
 const styles = StyleSheet.create({
   splash: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
 
 class Splash extends React.Component {
-  static navigationOptions = {
-    header: null,
-  }
+  static defaultNavigationOptions = {
+    header: null
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoading: true,
+      isLoading: true
     };
   }
 
@@ -42,24 +40,25 @@ class Splash extends React.Component {
     const { session } = this.props;
 
     try {
-      await new Promise(async (resolve, reject) => setTimeout(() => {
-        if (!session) {
-          reject('No current session');
-          return;
-        }
+      await new Promise(async (resolve, reject) =>
+        setTimeout(() => {
+          if (!session) {
+            reject("No current session");
+            return;
+          }
 
-        resolve();
-      }, 3000));
+          resolve();
+        }, 3000)
+      );
     } catch (exception) {
-      console.log('rejected', exception);
+      console.log("rejected", exception);
     }
 
     const loggedIn = session && session.isValid();
 
     this.setState({ isLoading: false });
 
-    this._navigateTo(loggedIn ? 'Home' : 'FirstScreen');
-
+    this._navigateTo(loggedIn ? "Home" : "FirstScreen");
   }
 
   _navigateTo(routeName) {
@@ -68,10 +67,13 @@ class Splash extends React.Component {
 
   render() {
     return (
-      this.state.isLoading && <View style={styles.splash}><Text>Loading {Constants.APP_NAME}...</Text></View>
+      this.state.isLoading && (
+        <View style={styles.splash}>
+          <Text>Loading {Constants.APP_NAME}...</Text>
+        </View>
+      )
     );
   }
-
 }
 
 export default Splash;

@@ -13,7 +13,7 @@
 import React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { Icon } from "react-native-elements";
-import { createBottomTabNavigator } from "react-navigation";
+import { TabBarBottom, TabNavigation } from "react-navigation";
 import SignIn from "../Components/LogIn";
 import SignUp from "../Components/SignUp";
 import { colors } from "../Utils/theme";
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const FirstScreen = createBottomTabNavigator(
+const FirstScreen = TabNavigation(
   {
     LogIn: {
       screen: props => {
@@ -57,7 +57,9 @@ const FirstScreen = createBottomTabNavigator(
               </Text>
             )}
           </View>
-        )
+        ),
+        tabBarComponent: TabBarBottom,
+        tabBarPosition: "bottom"
       }
     },
     SignUp: {
@@ -72,7 +74,7 @@ const FirstScreen = createBottomTabNavigator(
           />
         );
       },
-      navigationOptions: {
+      defaultNavigationOptions: {
         tabBarLabel: "Sign Up",
         tabBarIcon: ({ tintColor }) => (
           <View style={styles.tabBarIconContainer}>

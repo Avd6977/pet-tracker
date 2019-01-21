@@ -26,7 +26,7 @@ import {
   FormLabel,
   FormValidationMessage
 } from "react-native-elements";
-import { createStackNavigator } from "react-navigation";
+import { StackNavigator } from "react-navigation";
 import MFAPrompt from "../../lib/Categories/Auth/Components/MFAPrompt";
 import Constants from "../Utils/constants";
 import { colors } from "../Utils/theme";
@@ -251,7 +251,7 @@ class LogIn extends React.Component {
   }
 }
 
-const LogInStack = createStackNavigator(
+const LogInStack = StackNavigator(
   {
     LogIn: {
       screen: props => {
@@ -259,7 +259,7 @@ const LogInStack = createStackNavigator(
 
         return <LogIn {...screenProps} {...otherProps} />;
       },
-      navigationOptions: {
+      defaultNavigationOptions: {
         title: Constants.APP_NAME
       }
     },
@@ -276,7 +276,7 @@ const LogInStack = createStackNavigator(
           />
         );
       },
-      navigationOptions: {
+      defaultNavigationOptions: {
         title: Constants.APP_NAME
       }
     }
